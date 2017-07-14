@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:OrderCreator"
+             x:Class="OrderCreator.MainPage" Padding="5,20,5,5">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <DataTemplate x:Key="ReadTemplate">
+                <ViewCell>
+                    <Grid VerticalOptions="Center" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Header}" />
+                        <Label Grid.Column="1" Text="{Binding Value}" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        
+            <DataTemplate x:Key="EditTemplate">
+                <ViewCell>
+                    <Grid VerticalOptions="Center" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Header}" />
+                        <Entry Grid.Column="1" Text="{Binding Value}" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+
+            <local:CellTemplateSelector x:Key="CellTemplateSelector" 
+                                        ReadTemplate="{StaticResource ReadTemplate}" 
+                                        EditTemplate="{StaticResource EditTemplate}"/>
+            
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ListView ItemsSource="{Binding Items}" SeparatorVisibility="None" IsGroupingEnabled="True" ItemTemplate="{StaticResource CellTemplateSelector}" Footer="{Binding}">
+        <ListView.GroupHeaderTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid>
+                        <Label Text="{Binding LongGroupName}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Button Text="Edit" Command="{Binding CmdEditGroup}" HorizontalOptions="End" IsVisible="{Binding ReadMode}" />
+                        <Button Text="Done" Command="{Binding CmdEditComplete}" HorizontalOptions="End" IsVisible="{Binding EditMode}" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.GroupHeaderTemplate>
+        <ListView.FooterTemplate>
+            <DataTemplate>
+                <Label />
+            </DataTemplate>
+        </ListView.FooterTemplate>
+
+    </ListView>
+
+</ContentPage>
